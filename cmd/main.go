@@ -9,7 +9,7 @@ import (
 
 	"github.com/BurntSushi/toml"
 	"github.com/erdauletbatalov/tsarka/configs"
-	"github.com/erdauletbatalov/tsarka/repository/postgres"
+	"github.com/erdauletbatalov/tsarka/delivery/web"
 	"github.com/gin-gonic/gin"
 )
 
@@ -34,14 +34,15 @@ func main() {
 		log.Fatal(err)
 	}
 
-	db, err := postgres.NewPostgresRepository(config)
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer db.Close()
+	// db, err := postgres.NewPostgresRepository(config)
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
+	// defer db.Close()
 
 	router := gin.Default()
 	router.Use(gin.LoggerWithWriter(logger))
+	web.NewHandler(router)
 
 	server := &http.Server{
 		Addr:         config.BindAddr,
