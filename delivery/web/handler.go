@@ -20,6 +20,5 @@ func substr(c *gin.Context) {
 	fmt.Println(re.FindStringSubmatch(string(raw)))
 	fmt.Println(re.FindStringSubmatch("peach punch"))
 	fmt.Println(re.FindStringSubmatch("cricket"))
-	// fmt.Println(matched)
 
 }
