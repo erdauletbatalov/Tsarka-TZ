@@ -3,9 +3,9 @@ package redis
 import (
 	"context"
 	"errors"
+	"time"
 
-	"github.com/erdauletbatalov/tsarka/configs"
-	"github.com/go-redis/redis/v8"
+	redis "github.com/go-redis/redis/v8"
 )
 
 type Database struct {
@@ -17,15 +17,19 @@ var (
 	Ctx    = context.TODO()
 )
 
-func NewRedisRepository(config *configs.Config) (*Database, error) {
+func NewRedisRepository(addr string) (*Database, error) {
 	client := redis.NewClient(&redis.Options{
-		Addr:     configs.NewConfig().CacheAddr,
-		Password: configs.NewConfig().CachePassword,
+		Addr:     addr,
+		Password: "RedisTexzadanie2022",
 		DB:       0,
 	})
 	if err := client.Ping(Ctx).Err(); err != nil {
 		return nil, err
 	}
+
+	pipe := client.TxPipeline()
+	pipe.Set(Ctx, "counter", "0", time.Duration(time.Minute*30))
+
 	return &Database{
 		Client: client,
 	}, nil

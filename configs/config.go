@@ -18,13 +18,13 @@ func NewConfig() *Config {
 	return &Config{
 		BindAddr: ":8080",
 
-		HostDB:     "localhost",
+		HostDB:     "postgres",
 		PortDB:     ":5432",
 		NameDB:     "postgres",
 		UserDB:     "postgres",
 		PasswordDB: "",
 
-		CacheHost:     "localhost",
+		CacheHost:     "redis",
 		CachePassword: "",
 		CacheAddr:     ":6379",
 	}
