@@ -11,6 +11,7 @@ import (
 	"github.com/erdauletbatalov/tsarka/configs"
 	"github.com/erdauletbatalov/tsarka/delivery/web"
 	"github.com/gin-gonic/gin"
+	"gitlab.com/idoko/rediboard/db"
 )
 
 var configPath string
@@ -40,9 +41,21 @@ func main() {
 	// }
 	// defer db.Close()
 
+	dbRedis, err := db.NewDatabase(config)
+	if err != nil {
+		log.Fatalf("Failed to connect to redis: %s", err.Error())
+	}
+	// defer dbRedis.Client.Close()
+
+	// router := initRouter(database)
+	// router.Run(ListenAddr)
+
 	router := gin.Default()
+
+
 	router.Use(gin.LoggerWithWriter(logger))
 	web.NewHandler(router)
+}
 
 	server := &http.Server{
 		Addr:         config.BindAddr,

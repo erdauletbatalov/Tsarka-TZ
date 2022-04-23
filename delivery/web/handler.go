@@ -13,11 +13,13 @@ func NewHandler(r *gin.Engine) {
 	r.POST("/rest/pin/check", pin)
 }
 
-func pin(c *gin.Context) {
+func substr(c *gin.Context) {
 	raw, _ := c.GetRawData()
 	stringRaw := string(raw)
 
-	fmt.Println(usecase.PIN(stringRaw))
+	// fmt.Println(stringRaw)
+	fmt.Println(usecase.LongestSubstring(stringRaw))
+
 }
 
 func email(c *gin.Context) {
@@ -27,11 +29,9 @@ func email(c *gin.Context) {
 	fmt.Println(usecase.Emails(stringRaw))
 }
 
-func substr(c *gin.Context) {
+func pin(c *gin.Context) {
 	raw, _ := c.GetRawData()
 	stringRaw := string(raw)
 
-	// fmt.Println(stringRaw)
-	fmt.Println(usecase.LongestSubstring(stringRaw))
-
+	fmt.Println(usecase.PIN(stringRaw))
 }
