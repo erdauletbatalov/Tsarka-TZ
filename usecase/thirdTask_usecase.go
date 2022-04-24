@@ -2,12 +2,11 @@ package usecase
 
 import (
 	"context"
-	"strconv"
 
 	"github.com/erdauletbatalov/tsarka/domain"
 )
 
-const counter = "counter"
+const counter = "key"
 
 type counterUsecase struct {
 	counterRepo domain.CounterRepository
@@ -24,11 +23,10 @@ func (count *counterUsecase) Add(ctx context.Context, num int) error {
 	if err != nil {
 		return err
 	}
-	numFromStr, err := strconv.Atoi(key)
 	if err != nil {
 		return err
 	}
-	err = count.counterRepo.Set(ctx, numFromStr+num)
+	err = count.counterRepo.Set(ctx, key+num)
 	if err != nil {
 		return err
 	}
@@ -40,21 +38,20 @@ func (count *counterUsecase) Sub(ctx context.Context, num int) error {
 	if err != nil {
 		return err
 	}
-	numFromStr, err := strconv.Atoi(key)
 	if err != nil {
 		return err
 	}
-	err = count.counterRepo.Set(ctx, numFromStr-num)
+	err = count.counterRepo.Set(ctx, key-num)
 	if err != nil {
 		return err
 	}
 	return nil
 }
 
-func (count *counterUsecase) Get(ctx context.Context) (string, error) {
+func (count *counterUsecase) Get(ctx context.Context) (int, error) {
 	key, err := count.counterRepo.Get(ctx)
 	if err != nil {
-		return "", err
+		return 0, err
 	}
 	return key, nil
 }

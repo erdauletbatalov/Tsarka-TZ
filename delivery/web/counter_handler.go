@@ -29,14 +29,13 @@ func (counter *CounterHandler) add(c *gin.Context) {
 	param := c.Param("number")
 	num, err := strconv.Atoi(param)
 	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "field validation failed"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "ATOI"})
 	}
 	err = counter.counterUsecase.Add(c.Request.Context(), num)
 	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "field validation failed"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	fmt.Println(num)
 }
 
 func (counter *CounterHandler) sub(c *gin.Context) {
@@ -50,13 +49,12 @@ func (counter *CounterHandler) sub(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "field validation failed"})
 		return
 	}
-	fmt.Println(num)
 }
 
 func (counter *CounterHandler) get(c *gin.Context) {
 	num, err := counter.counterUsecase.Get(c.Request.Context())
 	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "field validation failed"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 	fmt.Println(num)

@@ -2,39 +2,35 @@ package repository
 
 import (
 	"context"
-	"time"
 
 	"github.com/erdauletbatalov/tsarka/domain"
-	redisDb "github.com/erdauletbatalov/tsarka/repository/redis"
+	"github.com/go-redis/redis"
 )
 
-const counter = "counter"
+const counter = "key"
 
 type counterRepository struct {
-	db *redisDb.Database
+	db *redis.Client
 }
 
-func NewCounterRepository(db *redisDb.Database) domain.CounterRepository {
+func NewCounterRepository(db *redis.Client) domain.CounterRepository {
 	return &counterRepository{
 		db: db,
 	}
 }
 
 func (coun *counterRepository) Set(ctx context.Context, num int) error {
-	pipe := coun.db.Client.TxPipeline()
-	new := pipe.Set(ctx, counter, num, time.Duration(time.Minute*30))
-	if new.Err() != nil {
-		return new.Err()
+	err := coun.db.Set(counter, num, 0).Err()
+	if err != nil {
+		return err
 	}
 	return nil
 }
 
-func (coun *counterRepository) Get(ctx context.Context) (string, error) {
-	pipe := coun.db.Client.TxPipeline()
-	result := pipe.Get(ctx, counter)
-	if result.Err() != nil {
-		return "", result.Err()
+func (coun *counterRepository) Get(ctx context.Context) (int, error) {
+	new, err := coun.db.Get(counter).Int()
+	if err != nil {
+		return 0, err
 	}
-
-	return result.String(), nil
+	return new, nil
 }
