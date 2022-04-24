@@ -6,8 +6,6 @@ import (
 	"github.com/erdauletbatalov/tsarka/domain"
 )
 
-const counter = "key"
-
 type counterUsecase struct {
 	counterRepo domain.CounterRepository
 }

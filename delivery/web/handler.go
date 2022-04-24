@@ -1,7 +1,7 @@
 package web
 
 import (
-	"fmt"
+	"net/http"
 
 	"github.com/erdauletbatalov/tsarka/usecase"
 	"github.com/gin-gonic/gin"
@@ -18,20 +18,19 @@ func substr(c *gin.Context) {
 	stringRaw := string(raw)
 
 	// fmt.Println(stringRaw)
-	fmt.Println(usecase.LongestSubstring(stringRaw))
-
+	c.JSON(http.StatusOK, gin.H{"find": usecase.LongestSubstring(stringRaw)})
 }
 
 func email(c *gin.Context) {
 	raw, _ := c.GetRawData()
 	stringRaw := string(raw)
 
-	fmt.Println(usecase.Emails(stringRaw))
+	c.JSON(http.StatusOK, gin.H{"find": usecase.Emails(stringRaw)})
 }
 
 func pin(c *gin.Context) {
 	raw, _ := c.GetRawData()
 	stringRaw := string(raw)
 
-	fmt.Println(usecase.PIN(stringRaw))
+	c.JSON(http.StatusOK, gin.H{"find": usecase.PIN(stringRaw)})
 }
