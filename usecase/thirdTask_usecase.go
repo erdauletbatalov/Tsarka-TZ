@@ -23,9 +23,6 @@ func (count *counterUsecase) Add(ctx context.Context, num int) error {
 	if err != nil {
 		return err
 	}
-	if err != nil {
-		return err
-	}
 	err = count.counterRepo.Set(ctx, key+num)
 	if err != nil {
 		return err
@@ -35,9 +32,6 @@ func (count *counterUsecase) Add(ctx context.Context, num int) error {
 
 func (count *counterUsecase) Sub(ctx context.Context, num int) error {
 	key, err := count.counterRepo.Get(ctx)
-	if err != nil {
-		return err
-	}
 	if err != nil {
 		return err
 	}

@@ -48,9 +48,6 @@ func main() {
 		log.Fatalf("Failed to connect to redis: %s", err.Error())
 	}
 
-	// router := initRouter(database)
-	// router.Run(ListenAddr)
-
 	router := gin.Default()
 
 	router.Use(gin.LoggerWithWriter(logger))

@@ -21,7 +21,6 @@ func NewUserHandler(r *gin.Engine, us domain.UserUsecase) {
 	r.POST("/rest/user", handler.create)
 	r.GET("/rest/user/:id", handler.get)
 	r.PUT("/rest/user/:id", handler.update)
-
 	r.DELETE("/rest/user/:id", handler.remove)
 
 }

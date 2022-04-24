@@ -16,7 +16,7 @@ type Database struct {
 func NewRedisRepository(password string) *redis.Client {
 	client := redis.NewClient(&redis.Options{
 		Addr:     "0.0.0.0:6379",
-		Password: "RedisTexzadanie2022",
+		Password: password,
 		DB:       0,
 	})
 
@@ -24,7 +24,7 @@ func NewRedisRepository(password string) *redis.Client {
 	if err != nil {
 		log.Println(err)
 	}
-	err = client.Set("key", "0", 0).Err()
+	err = client.Set(counter, "0", 0).Err()
 	if err != nil {
 		fmt.Println(err)
 	}
